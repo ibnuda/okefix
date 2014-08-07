@@ -3,78 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <script src="ayak.js" type="text/javascript"></script>
-    <script src="jquery.js" type="text/javascript" charset="utf-8">
-    </script>
-</head>
-<form action="">
-    <table>
-        <tr>
-            <td>
-                <input id="files" type="file">
-            </td>
-            <td>
-                <input id="buttonkek" type="button" value="klik" onclick="ngahaha()">
-            </td>
-        </tr>
-    </table>
-</form>
-<div id="list"></div>
-<!--ol id="are"></ol-->
-<table id="are" border='1'></table>
-<script type="text/javascript">
-var isi = "";
-var lemper = new Array();
-document.getElementById('files').addEventListener('change', readFile, false);
-
-    function readFile (evt) {
-        var files = evt.target.files;
-        var file = files[0];           
-        var reader = new FileReader();
-        var isi = "";
-        reader.onload = function() {
-            //console.log(this.result);            
-            //document.getElementById("list").innerHTML = this.result;
-            //ngahaha(this.result);
-            isi = this.result;
-            ngahaha(isi);
-        };
-        reader.readAsText(file);
-    }
-
-function ngahaha(isi){
-    //kalimat = awal huruf kapital, akhiran tanda seru / titik / tanya.
-    var lemper = isi.match(/\(?[0-9A-Z][^\.\?\!]+[\.!\?]\)?/g);
-    document.getElementById("are").innerHTML = "";
-    for ( var i = 0, len = lemper.length; i < len; i++){
-        document.getElementById("list").innerHTML =  'menghitung ' + (i + 1) + ' dari ' + lemper.length + ' kalimat';
-        lelele(lemper[i]);
-		/*
-        $.ajax({
-            url: 'kePHP.php',
-            type: 'GET',
-            dataType: 'xml',
-            data: $.param( $('lemper[i]') ),
-            complete: function (jqXHR, textStatus) {
-                //alert("ngirim data");
-                document.getElementByID("are").innerHTML += lemper[i] + "<br>";
-            },
-            success: function (data, textStatus, jqXHR) {
-				function(){
-					$('#buttonkek').click(function(event){
-						event.preventDefault();
-						$.get("kePHP.php?yangDicari=" + lemper[i]);
-					}
-				};
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                // error callback
-            }
-        });
-		*/
-    }
-}
-</script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script type="text/javascript" charset="utf-8" src="js/ayak.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    </head>
 <body>
+   <div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<form role="form">
+				<div class="form-group">
+					<p class="help-block">
+						Pilih berkas yang akan dicocokkan dalam bentuk plaintext / .txt.
+					</p>
+					 <label for="exampleInputFile">Berkas</label><input id="exampleInputFile" type="file" />
+                    <script type="text/javascript">
+                    var isi = "";
+                    var lemper = new Array();
+                    document.getElementById('exampleInputFile').addEventListener('change', readFile, false);
+
+                        function readFile (evt) {
+                            var files = evt.target.files;
+                            var file = files[0];           
+                            var reader = new FileReader();
+                            var isi = "";
+                            reader.onload = function() {
+                                isi = this.result;
+                                ngahaha(isi);
+                            };
+                            reader.readAsText(file);
+                        }
+
+                    function ngahaha(isi){
+                        //kalimat = awal huruf kapital, akhiran tanda seru / titik / tanya.
+                        var lemper = isi.match(/\(?[0-9A-Z][^\.\?\!]+[\.!\?]\)?/g);
+                        document.getElementById("are").innerHTML = "";
+                        for ( var i = 0, len = lemper.length; i < len; i++){
+                            document.getElementById("progress").innerHTML = 
+                                '<div class="progress-bar" role="progressbar" aria-valuenow="' + 
+                                (i+1) + '" aria-valuemin="0" aria-valuemax="100" style="width: ' +
+                                (i+1) + '%;"> ' + (i+1) + '% </div>';
+                            //document.getElementById("list").innerHTML =  'menghitung ' + (i + 1) + ' dari ' + lemper.length + ' kalimat';
+                            lelele(lemper[i]);
+                        }
+                    }
+                    </script>
+				</div>
+			</form>
+			<div id="progress" class="progress">
+			</div>
+			<table class="table">
+				<thead> 
+                    <tr> <th> Kalimat (30 karakter pertama).  </th> <th> ID Skripsi </th> <th> Judul Skripsi </th> </tr>
+				</thead>
+				<tbody id="are">
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div> 
 </body>
 </html>

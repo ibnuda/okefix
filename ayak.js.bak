@@ -1,0 +1,110 @@
+var xmlHttp = buatObjekRekuesXmlHttp();
+var isian = new Array();
+
+function buatObjekRekuesXmlHttp() {
+    var xmlHttp;
+    try {
+        xmlHttp = new XMLHttpRequest();
+    } catch (e) {
+        var versiXmlHttp = new Array("MSXML2.XMLHTTP.6.0",
+                                     "MSXML2.XMLHTTP.5.0",
+                                     "MSXML2.XMLHTTP.4.0",
+                                     "MSXML2.XMLHTTP.3.0",
+                                     "Microsoft.XMLHTTP");
+        for (var i = 0, len = versiXmlHttp.length; i < len; i++) {
+            try {
+                xmlHttp = new ActiveXObject(versiXmlHttp[i]);
+            } catch (e) {  }
+        }
+    }
+    if (!xmlHttp) {
+        alert("tak bisa mbuat objek. pakai browser yang lebih baru.");
+    } else {
+        return xmlHttp;
+    }
+}
+
+function display($pesan) {
+    bagianDiv = document.getElementById("are");
+    bagianDiv.innerHTML = $pesan + "<br>";
+}
+
+function displayError($pesan) {
+    display("gagal mendapatkan pesan.");
+}
+
+function handleRequestStateChange() {
+    if (xmlHttp.readyState == 4) {
+        if (xmlHttp.status == 200) {
+            try {
+                handleServerResponse();
+            } catch (e) {
+                alert("gagal baca respon.");
+            }
+        } else {
+            alert("ada masalah ngambil data.");
+        }
+    }
+}
+
+function lelele(kalimat) {
+    if (xmlHttp) {
+        if (setring) {
+            isian.push(kalimat);
+        }
+        try {
+            if ((xmlHttp.readyState === 4 || xmlHttp.readyState === 0) && isian.length > 0) {
+                var entriIsian = isian.shift();
+                var yangDicari = "yangDicari=" + entriIsian;
+                xmlHttp.open("GET", "kePHP.php?" + yangDicari, true);
+                xmlHttp.onreadystatechange = handleAmbilData;
+                xmlHttp.send(null);
+            }
+        } catch (e) {
+            alert("ndak bisa nyambung server. " + e.toString());
+        }
+    }
+//    document.getElementById("are").innerHTML += "<li>" + setring + "</li>";
+}
+
+function handleServerResponse() {
+    var xmlResponse = xmlHttp.responseXML;
+    if (!xmlResponse || !xmlResponse.documentElement) {
+        throw("struktur xml invalid : " + xmlHttp.responseText);
+    }
+    var rootNodeName = xmlResponse.documentElement.nodeName;
+    if (rootNodeName == "parseerror") {
+        throw("struktur xml tak valid. " + xmlHttp.responseText);
+    }
+    xmlRoot = xmlResponse.documentElement;
+    if (rootNodeName != "response" || !xmlRoot.firstChild) {
+        throw("struktur ndak valid." + xmlHttp.responseText);
+    }
+    responseText = xmlRoot.firstChild.data;
+    myDiv = document.getElementById("myDivElement");
+    myDiv.innerHTML += responseText;
+}
+
+function handleGettingData() {
+    if (xmlHttp.readyState == 4) {
+        if (xmlHttp.status == 200) {
+            try {
+                ambilData();
+            } catch (e) {
+                displayError(e.toString());
+            }
+        } else {
+            displayError(xmlHttp.status);
+        }
+    }
+}
+
+function ambilData() {
+    var respon = xmlHttp.responseText;
+    if (response.indexOf("ERRNO") >= 0
+        || response.indexOf("error") >= 0
+        || response.length == 0) {
+        throw(response.length == 0 ? "server error." : response);
+    }
+    display(response);
+}

@@ -10,9 +10,13 @@
 <form action="">
     <table>
         <tr>
-            <input id="files" type="file">
+            <td>
+                <input id="files" type="file">
+            </td>
+            <td>
+                <input id="buttonkek" type="button" value="klik" onclick="ngahaha()">
+            </td>
         </tr>
-        <tr><input id="buttonkek" type="button" value="klik" onclick="ngahaha()"></tr>
     </table>
 </form>
 <div id="list"></div>
@@ -43,7 +47,7 @@ function ngahaha(isi){
     var lemper = isi.match(/\(?[0-9A-Z][^\.\?\!]+[\.!\?]\)?/g);
     document.getElementById("are").innerHTML = "";
     for ( var i = 0, len = lemper.length; i < len; i++){
-        //document.getElementById("are").innerHTML +=  '<li>' + lemper[i] + '</li>' ;
+        document.getElementById("list").innerHTML =  'menghitung ' + (i + 1) + ' dari ' + lemper.length + ' kalimat';
         lelele(lemper[i]);
 		/*
         $.ajax({

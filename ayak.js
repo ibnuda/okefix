@@ -46,7 +46,7 @@ function lelele(kalimat) {
 
 function tempelinDiLaman($pesan) {
     bagianDiLaman = document.getElementById("are");
-    bagianDiLaman.innerHTML += "<tr><td>" + $pesan + "</td></tr>";
+    bagianDiLaman.innerHTML += "" + $pesan + "";
 }
 
 function tempelinErrorDiLaman($pesan) {

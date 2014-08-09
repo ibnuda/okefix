@@ -7,6 +7,9 @@
     <script type="text/javascript" charset="utf-8" src="js/ayak.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/bootstrap.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/pdf/jspdf/libs/sprintf.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/pdf/jspdf/libs/base64.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/pdf/jspdf/jspdf.js"></script>
     </head>
 <body>
    <div class="container">
@@ -17,7 +20,8 @@
 					<p class="help-block">
 						Pilih berkas yang akan dicocokkan dalam bentuk plaintext / .txt.
 					</p>
-					 <label for="exampleInputFile">Berkas</label><input id="exampleInputFile" type="file" />
+					<label for="exampleInputFile">Berkas</label><input id="exampleInputFile" type="file" />
+                    <!--/div--> <button type="submit" class="btn" onclick="$('#initabel').tableExport(type:'pdf',escape,'false'})">cetak</button> 
                     <script type="text/javascript">
                     var isi = "";
                     var lemper = new Array();
@@ -53,7 +57,7 @@
 			</form>
 			<div id="progress" class="progress">
 			</div>
-			<table class="table">
+			<table class="table" id="initabel">
 				<thead> 
                     <tr> <th> Kalimat (30 karakter pertama).  </th> <th> ID Skripsi </th> <th> Judul Skripsi </th> </tr>
 				</thead>

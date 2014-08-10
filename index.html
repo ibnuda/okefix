@@ -17,7 +17,7 @@
 		<div class="col-md-12 column">
 			<form role="form">
 				<div class="form-group">
-					<p class="help-block">
+					<p id="list" class="help-block">
 						Pilih berkas yang akan dicocokkan dalam bentuk plaintext / .txt.
 					</p>
 					<label for="exampleInputFile">Berkas</label><input id="exampleInputFile" type="file" />
@@ -48,7 +48,7 @@
                                 '<div class="progress-bar" role="progressbar" aria-valuenow="' + 
                                 ((i+1) * 100 / len) + '" aria-valuemin="0" aria-valuemax="100" style="width: ' +
                                 ((i+1) * 100 / len) + '%;"> ' + ((i+1) * 100 / len) + '% </div>';
-                            //document.getElementById("list").innerHTML =  'menghitung ' + (i + 1) + ' dari ' + lemper.length + ' kalimat';
+                            document.getElementById("list").innerHTML =  'menghitung ' + (i + 1) + ' dari ' + lemper.length + ' kalimat';
                             lelele(lemper[i]);
                         }
                     }
